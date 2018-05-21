@@ -18,7 +18,7 @@
  *
  */
 
-package org.lineageos.settings.device;
+package com.cyanogenmod.settings.device;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

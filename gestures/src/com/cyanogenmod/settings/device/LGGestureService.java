@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.lineageos.settings.device;
+package com.cyanogenmod.settings.device;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -30,7 +30,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import org.lineageos.internal.util.FileUtils;
+import java.io.File;
 
 public class LGGestureService extends Service {
 
@@ -42,6 +42,7 @@ public class LGGestureService extends Service {
 
     private Context mContext;
     private PowerManager mPowerManager;
+	
 
     @Override
     public void onCreate() {
@@ -73,18 +74,9 @@ public class LGGestureService extends Service {
         return null;
     }
 
-    private boolean isDoubleTapEnabled() {
-        return (Settings.Secure.getInt(mContext.getContentResolver(),
-                    Settings.Secure.DOUBLE_TAP_TO_WAKE, 0) != 0);
-    }
-
     private boolean writeLPWG(boolean state) {
-        if (DEBUG) Log.d(TAG, "Writing to lpwg_notify");
-        if (isDoubleTapEnabled()) {
-            return FileUtils.writeLine(LPWG_NOTIFY_SYSFS, (state ? "9 1 1 1 0" : "9 1 0 1 0"));
-        } else {
-            return FileUtils.writeLine(LPWG_NOTIFY_SYSFS, (state ? "9 0 1 1 0" : "9 0 0 1 0"));
-        }
+        if (DEBUG) Log.d(TAG, "Writing to lpwg_notify");            
+		return FileUtils.writeLine(LPWG_NOTIFY_SYSFS, (state ? "9 1 1 1 0" : "9 1 0 1 0"));
     }
 
     private void onDisplayOn() {
